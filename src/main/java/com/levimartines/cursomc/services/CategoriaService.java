@@ -2,6 +2,7 @@ package com.levimartines.cursomc.services;
 
 import com.levimartines.cursomc.model.Categoria;
 import com.levimartines.cursomc.repositories.CategoriaRepository;
+import com.levimartines.cursomc.services.exceptions.ObjectNotFoundException;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,17 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public Categoria findById(Long id){
-        return categoriaRepository.findById(id).orElse(null);
+    public Categoria findById(Long id) {
+        return categoriaRepository.findById(id).orElseThrow(() ->
+            new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: "
+                + Categoria.class));
     }
 
-    public List<Categoria> findAll(){
+    public List<Categoria> findAll() {
         return categoriaRepository.findAll();
     }
 
-    public Categoria save(Categoria obj){
+    public Categoria save(Categoria obj) {
         return categoriaRepository.save(obj);
     }
 }
