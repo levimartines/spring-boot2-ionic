@@ -1,5 +1,6 @@
 package com.levimartines.cursomc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,5 +27,6 @@ public class Estado implements Serializable {
     private String nome;
 
     @OneToMany(mappedBy = "estado")
+    @JsonBackReference
     private final List<Cidade> cidades = new ArrayList<>();
 }
