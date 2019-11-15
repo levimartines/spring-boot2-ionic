@@ -1,11 +1,16 @@
 package com.levimartines.cursomc;
 
+import com.levimartines.cursomc.enums.TipoCliente;
 import com.levimartines.cursomc.model.Categoria;
 import com.levimartines.cursomc.model.Cidade;
+import com.levimartines.cursomc.model.Cliente;
+import com.levimartines.cursomc.model.Endereco;
 import com.levimartines.cursomc.model.Estado;
 import com.levimartines.cursomc.model.Produto;
 import com.levimartines.cursomc.repositories.CategoriaRepository;
 import com.levimartines.cursomc.repositories.CidadeRepository;
+import com.levimartines.cursomc.repositories.ClienteRepository;
+import com.levimartines.cursomc.repositories.EnderecoRepository;
 import com.levimartines.cursomc.repositories.EstadoRepository;
 import com.levimartines.cursomc.repositories.ProdutoRepository;
 import java.util.Arrays;
@@ -25,6 +30,10 @@ public class CursomcApplication implements CommandLineRunner {
     private EstadoRepository estadoRepository;
     @Autowired
     private CidadeRepository cidadeRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);
@@ -61,5 +70,17 @@ public class CursomcApplication implements CommandLineRunner {
 
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+
+        Cliente cli1 = new Cliente("Maria Silva", "19927087039", TipoCliente.PESSOAFISICA);
+        cli1.getTelefones().addAll(Arrays.asList("3331125", "5555555"));
+
+        Endereco end1 = new Endereco(null,"Rua Flores", "300", "Apto 303", "Jardim", "38220854", cli1, c1);
+        Endereco end2 = new Endereco(null,"Av Matos", "105", "Sala 800", "Centro", "18777012", cli1, c2);
+
+        cli1.getEnderecos().addAll(Arrays.asList(end1,end2));
+
+        clienteRepository.save(cli1);
+        enderecoRepository.saveAll(Arrays.asList(end1,end2));
+
     }
 }
