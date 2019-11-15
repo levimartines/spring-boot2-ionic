@@ -29,7 +29,10 @@ public class Cliente implements Serializable {
     private Long id;
     private String nome;
     private String cpfOuCnpj;
-    private Integer tipoCliente;
+    private Long tipoCliente;
+
+    @OneToMany(mappedBy = "cliente")
+    private final List<Pedido> pedidos = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
     @JsonManagedReference

@@ -1,18 +1,27 @@
 package com.levimartines.cursomc;
 
+import com.levimartines.cursomc.enums.EstadoPagamento;
 import com.levimartines.cursomc.enums.TipoCliente;
 import com.levimartines.cursomc.model.Categoria;
 import com.levimartines.cursomc.model.Cidade;
 import com.levimartines.cursomc.model.Cliente;
 import com.levimartines.cursomc.model.Endereco;
 import com.levimartines.cursomc.model.Estado;
+import com.levimartines.cursomc.model.Pagamento;
+import com.levimartines.cursomc.model.PagamentoComBoleto;
+import com.levimartines.cursomc.model.PagamentoComCartao;
+import com.levimartines.cursomc.model.Pedido;
 import com.levimartines.cursomc.model.Produto;
 import com.levimartines.cursomc.repositories.CategoriaRepository;
 import com.levimartines.cursomc.repositories.CidadeRepository;
 import com.levimartines.cursomc.repositories.ClienteRepository;
 import com.levimartines.cursomc.repositories.EnderecoRepository;
 import com.levimartines.cursomc.repositories.EstadoRepository;
+import com.levimartines.cursomc.repositories.PagamentoRepository;
+import com.levimartines.cursomc.repositories.PedidoRepository;
 import com.levimartines.cursomc.repositories.ProdutoRepository;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -34,13 +43,19 @@ public class CursomcApplication implements CommandLineRunner {
     private ClienteRepository clienteRepository;
     @Autowired
     private EnderecoRepository enderecoRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);
     }
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
         Categoria cat1 = new Categoria("Informática");
         Categoria cat2 = new Categoria("Escritório");
 
@@ -82,5 +97,17 @@ public class CursomcApplication implements CommandLineRunner {
         clienteRepository.save(cli1);
         enderecoRepository.saveAll(Arrays.asList(end1,end2));
 
+        Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), null, cli1, end1);
+        Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), null, cli1, end2);
+
+        Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6L);
+        ped1.setPagamento(pagto1);
+        Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE,ped2, sdf.parse("20/10/2017 00:00"), null);
+        ped2.setPagamento(pagto2);
+
+        cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+
+        pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
+        pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
     }
 }
