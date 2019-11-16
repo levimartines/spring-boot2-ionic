@@ -15,11 +15,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "CLIENTES")
 public class Cliente implements Serializable {
@@ -28,8 +30,18 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    private String email;
     private String cpfOuCnpj;
-    private Long tipoCliente;
+    private Long tipo;
+
+    public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+        super();
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.cpfOuCnpj = cpfOuCnpj;
+        this.tipo = tipo.getCod();
+    }
 
     @OneToMany(mappedBy = "cliente")
     private final List<Pedido> pedidos = new ArrayList<>();
@@ -42,18 +54,11 @@ public class Cliente implements Serializable {
     @CollectionTable(name = "telefones")
     private final Set<String> telefones = new HashSet<>();
 
-    public Cliente(String nome, String cpfOuCnpj,
-        TipoCliente tipoCliente) {
-        this.nome = nome;
-        this.cpfOuCnpj = cpfOuCnpj;
-        this.tipoCliente = tipoCliente.getCod();
-    }
-
     public TipoCliente getTipoCliente() {
-        return TipoCliente.getTipoClienteFromCod(tipoCliente);
+        return TipoCliente.getTipoClienteFromCod(tipo);
     }
 
     public void setTipoCliente(TipoCliente tipoCliente) {
-        this.tipoCliente = tipoCliente.getCod();
+        this.tipo = tipoCliente.getCod();
     }
 }

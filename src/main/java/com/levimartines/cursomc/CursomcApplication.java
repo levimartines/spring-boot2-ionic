@@ -63,7 +63,7 @@ public class CursomcApplication implements CommandLineRunner {
         Categoria cat1 = new Categoria("Informática");
         Categoria cat2 = new Categoria("Escritório");
 
-        Produto prod1 = new Produto("Computador",2000.0);
+        Produto prod1 = new Produto("Computador", 2000.0);
         Produto prod2 = new Produto("Impressora", 800.0);
         Produto prod3 = new Produto("Mouse", 80.0);
 
@@ -75,7 +75,7 @@ public class CursomcApplication implements CommandLineRunner {
         prod3.getCategorias().add(cat2);
 
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
-        produtoRepository.saveAll(Arrays.asList(prod1,prod2,prod3));
+        produtoRepository.saveAll(Arrays.asList(prod1, prod2, prod3));
 
         Estado est1 = new Estado(null, "Minas Gerais");
         Estado est2 = new Estado(null, "São Paulo");
@@ -85,34 +85,38 @@ public class CursomcApplication implements CommandLineRunner {
         Cidade c3 = Cidade.builder().nome("Campinas").estado(est2).build();
 
         est1.getCidades().add(c1);
-        est2.getCidades().addAll(Arrays.asList(c2,c3));
+        est2.getCidades().addAll(Arrays.asList(c2, c3));
 
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Cliente cli1 = new Cliente("Maria Silva", "19927087039", TipoCliente.PESSOAFISICA);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "19927087039",
+            TipoCliente.PESSOAFISICA);
         cli1.getTelefones().addAll(Arrays.asList("3331125", "5555555"));
 
-        Endereco end1 = new Endereco(null,"Rua Flores", "300", "Apto 303", "Jardim", "38220854", cli1, c1);
-        Endereco end2 = new Endereco(null,"Av Matos", "105", "Sala 800", "Centro", "18777012", cli1, c2);
+        Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220854",
+            cli1, c1);
+        Endereco end2 = new Endereco(null, "Av Matos", "105", "Sala 800", "Centro", "18777012",
+            cli1, c2);
 
-        cli1.getEnderecos().addAll(Arrays.asList(end1,end2));
+        cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 
         clienteRepository.save(cli1);
-        enderecoRepository.saveAll(Arrays.asList(end1,end2));
+        enderecoRepository.saveAll(Arrays.asList(end1, end2));
 
-        Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), null, cli1, end1);
-        Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), null, cli1, end2);
+        Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, end1);
+        Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, end2);
 
         Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6L);
         ped1.setPagamento(pagto1);
-        Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE,ped2, sdf.parse("20/10/2017 00:00"), null);
+        Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2,
+            sdf.parse("20/10/2017 00:00"), null);
         ped2.setPagamento(pagto2);
 
-        cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+        cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 
-        pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
-        pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
+        pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+        pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 
         ItemPedido ip1 = new ItemPedido(ped1, prod1, 0.00, 1L, 2000.00);
         ItemPedido ip2 = new ItemPedido(ped1, prod3, 0.00, 2L, 80.00);

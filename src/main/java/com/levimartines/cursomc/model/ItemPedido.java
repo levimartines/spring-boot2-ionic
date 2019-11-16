@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 @Entity
 public class ItemPedido implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @EmbeddedId
     private ItemPedidoPK id = new ItemPedidoPK();
 
@@ -17,7 +19,8 @@ public class ItemPedido implements Serializable {
     public ItemPedido() {
     }
 
-    public ItemPedido(Pedido pedido, Produto produto, Double desconto, Long quantidade, Double preco) {
+    public ItemPedido(Pedido pedido, Produto produto, Double desconto, Long quantidade,
+        Double preco) {
         super();
         id.setPedido(pedido);
         id.setProduto(produto);
@@ -76,18 +79,24 @@ public class ItemPedido implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
         ItemPedido other = (ItemPedido) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
+			if (other.id != null) {
+				return false;
+			}
+        } else if (!id.equals(other.id)) {
+			return false;
+		}
         return true;
     }
+
 }
