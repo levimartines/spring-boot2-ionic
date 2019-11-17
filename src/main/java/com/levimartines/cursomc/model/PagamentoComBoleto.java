@@ -1,17 +1,22 @@
 package com.levimartines.cursomc.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.levimartines.cursomc.enums.EstadoPagamento;
 import java.util.Date;
 import javax.persistence.Entity;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class PagamentoComBoleto extends Pagamento {
 
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date dataVencimento;
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date dataPagamento;
 
     public PagamentoComBoleto(Long id, EstadoPagamento estadoPagamento,
