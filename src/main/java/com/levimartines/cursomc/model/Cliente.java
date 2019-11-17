@@ -1,7 +1,6 @@
 package com.levimartines.cursomc.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.levimartines.cursomc.enums.TipoCliente;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,11 +35,11 @@ public class Cliente implements Serializable {
     private Long tipo;
 
     @OneToMany(mappedBy = "cliente")
-    @JsonBackReference
+    @JsonIgnore
     private final List<Pedido> pedidos = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
-    @JsonManagedReference
+
     private final List<Endereco> enderecos = new ArrayList<>();
 
     @ElementCollection

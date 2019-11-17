@@ -1,6 +1,5 @@
 package com.levimartines.cursomc.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class Produto implements Serializable {
     @JoinTable(name = "PRODUTO_CATEGORIA",
         joinColumns = @JoinColumn(name = "produto_id"),
         inverseJoinColumns = @JoinColumn(name = "categoria_id"))
-    @JsonBackReference
+    @JsonIgnore
     private List<Categoria> categorias = new ArrayList<>();
 
     @OneToMany(mappedBy = "id.produto")
