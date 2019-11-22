@@ -31,6 +31,11 @@ public class CategoriaController {
         this.categoriaService = categoriaService;
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Categoria> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(categoriaService.findById(id));
+    }
+
     @GetMapping(value = "/page")
     public ResponseEntity<?> findPage(Pageable page){
         Page<Categoria> list = categoriaService.findPage(page);
@@ -41,11 +46,6 @@ public class CategoriaController {
     public ResponseEntity<?> findAll(){
         List<Categoria> list = categoriaService.findAll();
         return ResponseEntity.ok(list.stream().map(CategoriaBean::new).collect(Collectors.toList()));
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Categoria> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(categoriaService.findById(id));
     }
 
     @PostMapping

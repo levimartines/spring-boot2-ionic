@@ -16,15 +16,18 @@ public enum TipoCliente {
         this.descricao = descricao;
     }
 
-    public static TipoCliente getTipoClienteFromCod(Long cod){
-        if (cod == null){
+    public static TipoCliente toEnum(Long cod) {
+
+        if (cod == null) {
             return null;
         }
-        for(TipoCliente tipo : TipoCliente.values()){
-            if(cod.equals(tipo.cod)){
-                return tipo;
+
+        for (TipoCliente x : TipoCliente.values()) {
+            if (cod.equals(x.getCod())) {
+                return x;
             }
         }
+
         throw new IllegalArgumentException("Id inválido: " + cod);
     }
 

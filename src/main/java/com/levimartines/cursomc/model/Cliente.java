@@ -46,21 +46,27 @@ public class Cliente implements Serializable {
     @CollectionTable(name = "telefones")
     private final Set<String> telefones = new HashSet<>();
 
+    public Cliente(Long id, String nome, String email) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+    }
+
     public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
         super();
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
+        this.tipo = tipo==null ? null : tipo.getCod();
+    }
+
+    public TipoCliente getTipo() {
+        return TipoCliente.toEnum(tipo);
+    }
+
+    public void setTipo(TipoCliente tipo) {
         this.tipo = tipo.getCod();
-    }
-
-    public TipoCliente getTipoCliente() {
-        return TipoCliente.getTipoClienteFromCod(tipo);
-    }
-
-    public void setTipoCliente(TipoCliente tipoCliente) {
-        this.tipo = tipoCliente.getCod();
     }
 
     @Override
