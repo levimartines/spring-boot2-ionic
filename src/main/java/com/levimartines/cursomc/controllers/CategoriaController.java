@@ -1,8 +1,11 @@
 package com.levimartines.cursomc.controllers;
 
+import com.levimartines.cursomc.beans.CategoriaBean;
 import com.levimartines.cursomc.model.Categoria;
 import com.levimartines.cursomc.services.CategoriaService;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +26,12 @@ public class CategoriaController {
 
     public CategoriaController(CategoriaService categoriaService) {
         this.categoriaService = categoriaService;
+    }
+
+    @GetMapping
+    public ResponseEntity<?> findAll(){
+        List<Categoria> list = categoriaService.findAll();
+        return ResponseEntity.ok(list.stream().map(CategoriaBean::new).collect(Collectors.toList()));
     }
 
     @GetMapping(value = "/{id}")
