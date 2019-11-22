@@ -1,4 +1,4 @@
-package com.levimartines.cursomc.Handlers;
+package com.levimartines.cursomc.handlers;
 
 import com.levimartines.cursomc.services.exceptions.ObjectNotFoundException;
 import javax.servlet.http.HttpServletRequest;
