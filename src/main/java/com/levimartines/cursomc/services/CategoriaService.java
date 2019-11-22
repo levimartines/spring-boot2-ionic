@@ -6,6 +6,8 @@ import com.levimartines.cursomc.services.exceptions.DataIntegrityException;
 import com.levimartines.cursomc.services.exceptions.ObjectNotFoundException;
 import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +20,10 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
     }
 
+    public Page<Categoria> findPage(Pageable page) {
+        return categoriaRepository.findAll(page);
+    }
+
     public Categoria findById(Long id) {
         return categoriaRepository.findById(id).orElseThrow(() ->
             new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: "
@@ -25,7 +31,6 @@ public class CategoriaService {
     }
 
     public List<Categoria> findAll() {
-        
         return categoriaRepository.findAll();
     }
 
