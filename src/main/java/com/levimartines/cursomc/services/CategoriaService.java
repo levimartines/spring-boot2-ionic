@@ -41,8 +41,9 @@ public class CategoriaService {
     }
 
     public void update(Categoria obj) {
-        findById(obj.getId());
-        categoriaRepository.save(obj);
+        Categoria newObj = findById(obj.getId());
+        updateData(newObj, obj);
+        categoriaRepository.save(newObj);
     }
 
     public void delete(Long id) {
@@ -56,5 +57,9 @@ public class CategoriaService {
 
     public Categoria fromBean(CategoriaBean bean){
         return new Categoria(bean.getId(),bean.getNome());
+    }
+
+    private void updateData(Categoria newObj, Categoria obj) {
+        newObj.setNome(obj.getNome());
     }
 }
