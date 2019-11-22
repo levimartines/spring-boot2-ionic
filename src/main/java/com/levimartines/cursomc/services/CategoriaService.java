@@ -1,5 +1,6 @@
 package com.levimartines.cursomc.services;
 
+import com.levimartines.cursomc.beans.CategoriaBean;
 import com.levimartines.cursomc.model.Categoria;
 import com.levimartines.cursomc.repositories.CategoriaRepository;
 import com.levimartines.cursomc.services.exceptions.DataIntegrityException;
@@ -51,5 +52,9 @@ public class CategoriaService {
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityException("Não é possível excluir uma Categoria que possui Produtos");
         }
+    }
+
+    public Categoria fromBean(CategoriaBean bean){
+        return new Categoria(bean.getId(),bean.getNome());
     }
 }

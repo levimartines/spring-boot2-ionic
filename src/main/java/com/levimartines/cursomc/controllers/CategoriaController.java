@@ -7,6 +7,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -48,17 +49,17 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody Categoria obj, HttpServletRequest request) {
-        obj = categoriaService.save(obj);
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaBean obj, HttpServletRequest request) {
+        categoriaService.save(categoriaService.fromBean(obj));
         URI uri = ServletUriComponentsBuilder.fromRequest(request)
             .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity update(@RequestBody Categoria obj, @PathVariable Long id) {
+    public ResponseEntity update(@Valid @RequestBody CategoriaBean obj, @PathVariable Long id) {
         obj.setId(id);
-        categoriaService.update(obj);
+        categoriaService.update(categoriaService.fromBean(obj));
         return ResponseEntity.noContent().build();
     }
 
