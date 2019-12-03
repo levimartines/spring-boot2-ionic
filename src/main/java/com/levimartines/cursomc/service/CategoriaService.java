@@ -1,10 +1,10 @@
-package com.levimartines.cursomc.services;
+package com.levimartines.cursomc.service;
 
-import com.levimartines.cursomc.beans.CategoriaBean;
+import com.levimartines.cursomc.bean.CategoriaBean;
 import com.levimartines.cursomc.model.Categoria;
-import com.levimartines.cursomc.repositories.CategoriaRepository;
-import com.levimartines.cursomc.services.exceptions.DataIntegrityException;
-import com.levimartines.cursomc.services.exceptions.ObjectNotFoundException;
+import com.levimartines.cursomc.repository.CategoriaRepository;
+import com.levimartines.cursomc.service.exceptions.DataIntegrityException;
+import com.levimartines.cursomc.service.exceptions.ObjectNotFoundException;
 import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;

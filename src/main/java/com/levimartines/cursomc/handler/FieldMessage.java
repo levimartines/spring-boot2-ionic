@@ -1,4 +1,4 @@
-package com.levimartines.cursomc.handlers;
+package com.levimartines.cursomc.handler;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;

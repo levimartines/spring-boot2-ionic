@@ -1,7 +1,7 @@
-package com.levimartines.cursomc.handlers;
+package com.levimartines.cursomc.handler;
 
-import com.levimartines.cursomc.services.exceptions.DataIntegrityException;
-import com.levimartines.cursomc.services.exceptions.ObjectNotFoundException;
+import com.levimartines.cursomc.service.exceptions.DataIntegrityException;
+import com.levimartines.cursomc.service.exceptions.ObjectNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

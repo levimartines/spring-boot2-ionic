@@ -1,8 +1,8 @@
-package com.levimartines.cursomc.services;
+package com.levimartines.cursomc.service;
 
 import com.levimartines.cursomc.model.Pedido;
-import com.levimartines.cursomc.repositories.PedidoRepository;
-import com.levimartines.cursomc.services.exceptions.ObjectNotFoundException;
+import com.levimartines.cursomc.repository.PedidoRepository;
+import com.levimartines.cursomc.service.exceptions.ObjectNotFoundException;
 import java.util.List;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.levimartines.cursomc.beans;
+package com.levimartines.cursomc.bean;
 
 import com.levimartines.cursomc.model.Cliente;
 import java.io.Serializable;

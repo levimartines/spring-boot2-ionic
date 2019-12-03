@@ -1,6 +1,6 @@
-package com.levimartines.cursomc.controllers;
+package com.levimartines.cursomc.controller;
 
-import com.levimartines.cursomc.services.PedidoService;
+import com.levimartines.cursomc.service.PedidoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

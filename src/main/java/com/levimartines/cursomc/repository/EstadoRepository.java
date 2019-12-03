@@ -1,4 +1,4 @@
-package com.levimartines.cursomc.repositories;
+package com.levimartines.cursomc.repository;
 
 import com.levimartines.cursomc.model.Estado;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.levimartines.cursomc.handlers;
+package com.levimartines.cursomc.handler;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;

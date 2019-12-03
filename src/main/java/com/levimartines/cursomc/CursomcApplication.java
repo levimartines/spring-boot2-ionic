@@ -13,44 +13,37 @@ import com.levimartines.cursomc.model.PagamentoComBoleto;
 import com.levimartines.cursomc.model.PagamentoComCartao;
 import com.levimartines.cursomc.model.Pedido;
 import com.levimartines.cursomc.model.Produto;
-import com.levimartines.cursomc.repositories.CategoriaRepository;
-import com.levimartines.cursomc.repositories.CidadeRepository;
-import com.levimartines.cursomc.repositories.ClienteRepository;
-import com.levimartines.cursomc.repositories.EnderecoRepository;
-import com.levimartines.cursomc.repositories.EstadoRepository;
-import com.levimartines.cursomc.repositories.ItemPedidoRepository;
-import com.levimartines.cursomc.repositories.PagamentoRepository;
-import com.levimartines.cursomc.repositories.PedidoRepository;
-import com.levimartines.cursomc.repositories.ProdutoRepository;
+import com.levimartines.cursomc.repository.CategoriaRepository;
+import com.levimartines.cursomc.repository.CidadeRepository;
+import com.levimartines.cursomc.repository.ClienteRepository;
+import com.levimartines.cursomc.repository.EnderecoRepository;
+import com.levimartines.cursomc.repository.EstadoRepository;
+import com.levimartines.cursomc.repository.ItemPedidoRepository;
+import com.levimartines.cursomc.repository.PagamentoRepository;
+import com.levimartines.cursomc.repository.PedidoRepository;
+import com.levimartines.cursomc.repository.ProdutoRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
 
-    @Autowired
-    private CategoriaRepository categoriaRepository;
-    @Autowired
-    private ProdutoRepository produtoRepository;
-    @Autowired
-    private EstadoRepository estadoRepository;
-    @Autowired
-    private CidadeRepository cidadeRepository;
-    @Autowired
-    private ClienteRepository clienteRepository;
-    @Autowired
-    private EnderecoRepository enderecoRepository;
-    @Autowired
-    private PedidoRepository pedidoRepository;
-    @Autowired
-    private PagamentoRepository pagamentoRepository;
-    @Autowired
-    private ItemPedidoRepository itemPedidoRepository;
+    private final CategoriaRepository categoriaRepository;
+    private final ProdutoRepository produtoRepository;
+    private final EstadoRepository estadoRepository;
+    private final CidadeRepository cidadeRepository;
+    private final ClienteRepository clienteRepository;
+    private final EnderecoRepository enderecoRepository;
+    private final PedidoRepository pedidoRepository;
+    private final PagamentoRepository pagamentoRepository;
+    private final ItemPedidoRepository itemPedidoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);

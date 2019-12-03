@@ -1,4 +1,4 @@
-package com.levimartines.cursomc.services.exceptions;
+package com.levimartines.cursomc.service.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException {
     public ObjectNotFoundException(String message) {

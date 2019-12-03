@@ -1,13 +1,14 @@
-package com.levimartines.cursomc.controllers;
+package com.levimartines.cursomc.controller;
 
-import com.levimartines.cursomc.beans.CategoriaBean;
-import com.levimartines.cursomc.model.Categoria;
-import com.levimartines.cursomc.services.CategoriaService;
+import com.levimartines.cursomc.bean.ClienteBean;
+import com.levimartines.cursomc.model.Cliente;
+import com.levimartines.cursomc.service.ClienteService;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -22,50 +23,47 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping(value = "/categorias")
-public class CategoriaController {
+@RequestMapping(value = "/clientes")
+public class ClienteController {
 
-    private CategoriaService categoriaService;
-
-    public CategoriaController(CategoriaService categoriaService) {
-        this.categoriaService = categoriaService;
-    }
+    @Autowired
+    private ClienteService clienteService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Categoria> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(categoriaService.findById(id));
+    public ResponseEntity<Object> findById(@PathVariable Long id){
+        return ResponseEntity.ok(clienteService.findById(id));
     }
 
     @GetMapping(value = "/page")
     public ResponseEntity<?> findPage(Pageable page){
-        Page<Categoria> list = categoriaService.findPage(page);
-        return ResponseEntity.ok(list.map(CategoriaBean::new));
+        Page<Cliente> list = clienteService.findPage(page);
+        return ResponseEntity.ok(list.map(ClienteBean::new));
     }
 
     @GetMapping
     public ResponseEntity<?> findAll(){
-        List<Categoria> list = categoriaService.findAll();
-        return ResponseEntity.ok(list.stream().map(CategoriaBean::new).collect(Collectors.toList()));
+        List<Cliente> list = clienteService.findAll();
+        return ResponseEntity.ok(list.stream().map(ClienteBean::new).collect(Collectors.toList()));
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaBean obj, HttpServletRequest request) {
-        categoriaService.save(categoriaService.fromBean(obj));
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteBean obj, HttpServletRequest request) {
+        clienteService.save(clienteService.fromBean(obj));
         URI uri = ServletUriComponentsBuilder.fromRequest(request)
             .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity update(@Valid @RequestBody CategoriaBean obj, @PathVariable Long id) {
+    public ResponseEntity update(@Valid @RequestBody ClienteBean obj, @PathVariable Long id) {
         obj.setId(id);
-        categoriaService.update(categoriaService.fromBean(obj));
+        clienteService.update(clienteService.fromBean(obj));
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-        categoriaService.delete(id);
+        clienteService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
