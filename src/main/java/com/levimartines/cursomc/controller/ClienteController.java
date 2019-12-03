@@ -1,6 +1,7 @@
 package com.levimartines.cursomc.controller;
 
 import com.levimartines.cursomc.bean.ClienteBean;
+import com.levimartines.cursomc.bean.ClienteNewBean;
 import com.levimartines.cursomc.model.Cliente;
 import com.levimartines.cursomc.service.ClienteService;
 import java.net.URI;
@@ -47,7 +48,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteBean obj, HttpServletRequest request) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewBean obj, HttpServletRequest request) {
         clienteService.save(clienteService.fromBean(obj));
         URI uri = ServletUriComponentsBuilder.fromRequest(request)
             .path("/{id}").buildAndExpand(obj.getId()).toUri();
