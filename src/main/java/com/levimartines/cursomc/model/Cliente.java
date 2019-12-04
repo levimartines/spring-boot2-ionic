@@ -18,6 +18,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Getter
 @Setter
@@ -39,7 +41,7 @@ public class Cliente implements Serializable {
     private final List<Pedido> pedidos = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
-
+    @Cascade(CascadeType.ALL)
     private final List<Endereco> enderecos = new ArrayList<>();
 
     @ElementCollection
