@@ -3,13 +3,18 @@ package com.levimartines.cursomc.service.validation;
 import com.levimartines.cursomc.bean.ClienteNewBean;
 import com.levimartines.cursomc.enums.TipoCliente;
 import com.levimartines.cursomc.handler.FieldMessage;
+import com.levimartines.cursomc.repository.ClienteRepository;
 import com.levimartines.cursomc.service.validation.utils.BR;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewBean> {
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @Override
     public void initialize(ClienteInsert ann) {
@@ -28,6 +33,10 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
         if (objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR
             .isValidCNPJ(objDto.getCpfOuCnpj())) {
             list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
+        }
+
+        if (clienteRepository.findByEmail(objDto.getEmail())!=null) {
+            list.add(new FieldMessage("email", "Email já existente"));
         }
 
         for (FieldMessage e : list) {
