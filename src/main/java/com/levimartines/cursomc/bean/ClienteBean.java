@@ -1,6 +1,7 @@
 package com.levimartines.cursomc.bean;
 
 import com.levimartines.cursomc.model.Cliente;
+import com.levimartines.cursomc.service.validation.ClienteUpdate;
 import java.io.Serializable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -10,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 
 @Data
 @NoArgsConstructor
+@ClienteUpdate
 public class ClienteBean implements Serializable {
 
     private Long id;
