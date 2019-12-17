@@ -1,5 +1,6 @@
 package com.levimartines.cursomc.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.levimartines.cursomc.enums.EstadoPagamento;
 import javax.persistence.Entity;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento {
 
     private Long numeroDeParcelas;

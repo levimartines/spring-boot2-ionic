@@ -1,6 +1,7 @@
 package com.levimartines.cursomc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.levimartines.cursomc.enums.EstadoPagamento;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento implements Serializable {
 
     @Id

@@ -63,7 +63,7 @@ public class Pedido implements Serializable {
         for (ItemPedido itemPedido : itens){
             total += itemPedido.getSubtotal();
         }
-        return 0.9;
+        return total;
     }
 
     @Override
