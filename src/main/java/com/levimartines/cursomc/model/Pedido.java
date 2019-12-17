@@ -14,8 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,52 +58,12 @@ public class Pedido implements Serializable {
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getInstante() {
-        return instante;
-    }
-
-    public void setInstante(Date instante) {
-        this.instante = instante;
-    }
-
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(Pagamento pagamento) {
-        this.pagamento = pagamento;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Endereco getEnderecoDeEntrega() {
-        return enderecoDeEntrega;
-    }
-
-    public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
-        this.enderecoDeEntrega = enderecoDeEntrega;
-    }
-
-    public Set<ItemPedido> getItens() {
-        return itens;
-    }
-
-    public void setItens(Set<ItemPedido> itens) {
-        this.itens = itens;
+    public Double getValorTotal(){
+        double total = 0;
+        for (ItemPedido itemPedido : itens){
+            total += itemPedido.getSubtotal();
+        }
+        return 0.9;
     }
 
     @Override
