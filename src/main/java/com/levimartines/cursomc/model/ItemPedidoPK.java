@@ -1,6 +1,8 @@
 package com.levimartines.cursomc.model;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -59,6 +61,5 @@ public class ItemPedidoPK implements Serializable {
 		}
         return true;
     }
-
 
 }

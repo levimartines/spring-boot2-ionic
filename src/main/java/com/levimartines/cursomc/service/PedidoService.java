@@ -23,6 +23,8 @@ public class PedidoService {
     private final BoletoService boletoService;
     private final PagamentoRepository pagamentoRepository;
     private final ItemPedidoRepository itemPedidoRepository;
+    private final ClienteService clienteService;
+    private final EmailService emailService;
 
     public Pedido findById(Long id) {
         return pedidoRepository.findById(id).orElseThrow(() ->
@@ -40,6 +42,8 @@ public class PedidoService {
         obj.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
         obj.getPagamento().setPedido(obj);
 
+        obj.setCliente(clienteService.findById(obj.getCliente().getId()));
+
         if (obj.getPagamento() instanceof PagamentoComBoleto) {
             PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
             boletoService.preencherPagamento(obj, obj.getInstante());
@@ -50,10 +54,12 @@ public class PedidoService {
 
         for (ItemPedido ip : obj.getItens()) {
             ip.setDesconto(0.0);
-            ip.setPreco(produtoService.findById(ip.getId().getProduto().getId()).getPreco());
+            ip.setProduto(produtoService.findById(ip.getId().getProduto().getId()));
+            ip.setPreco(ip.getId().getProduto().getPreco());
             ip.getId().setPedido(obj);
         }
         itemPedidoRepository.saveAll(obj.getItens());
+        emailService.sendOrderConfirmationEmail(obj);
         return obj;
     }
 }
