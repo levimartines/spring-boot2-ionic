@@ -1,6 +1,7 @@
 package com.levimartines.cursomc.service;
 
 import com.levimartines.cursomc.enums.EstadoPagamento;
+import com.levimartines.cursomc.enums.Perfil;
 import com.levimartines.cursomc.enums.TipoCliente;
 import com.levimartines.cursomc.model.Categoria;
 import com.levimartines.cursomc.model.Cidade;
@@ -115,16 +116,24 @@ public class DbService {
             TipoCliente.PESSOAFISICA, passwordEncoder.encode("123"));
         cli1.getTelefones().addAll(Arrays.asList("3331125", "5555555"));
 
+        Cliente cli2 = new Cliente(null, "Admin GOD", "levi.mferreira@gmail.com", "19263556016",
+            TipoCliente.PESSOAFISICA, passwordEncoder.encode("123456"));
+        cli1.getTelefones().addAll(Arrays.asList("9999999", "91760101"));
+        cli2.addPerfil(Perfil.ADMIN);
+
         Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim",
             "38220854",
             cli1, c1);
         Endereco end2 = new Endereco(null, "Av Matos", "105", "Sala 800", "Centro", "18777012",
             cli1, c2);
+        Endereco end3 = new Endereco(null, "Av Gods", "111", "", "Morumbi", "18051112",
+            cli2, c3);
 
         cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+        cli2.getEnderecos().add(end3);
 
-        clienteRepository.save(cli1);
-        enderecoRepository.saveAll(Arrays.asList(end1, end2));
+        clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+        enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
 
         Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, end1);
         Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, end2);
