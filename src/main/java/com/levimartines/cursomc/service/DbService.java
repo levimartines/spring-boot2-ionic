@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -42,6 +43,8 @@ public class DbService {
     private final PedidoRepository pedidoRepository;
     private final PagamentoRepository pagamentoRepository;
     private final ItemPedidoRepository itemPedidoRepository;
+
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public void instantiateTestDatabase() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -109,7 +112,7 @@ public class DbService {
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
         Cliente cli1 = new Cliente(null, "Maria Silva", "levi.mferreira@hotmail.com", "19927087039",
-            TipoCliente.PESSOAFISICA);
+            TipoCliente.PESSOAFISICA, passwordEncoder.encode("123"));
         cli1.getTelefones().addAll(Arrays.asList("3331125", "5555555"));
 
         Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim",

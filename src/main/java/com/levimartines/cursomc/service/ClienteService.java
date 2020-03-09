@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +25,8 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
     private final EnderecoRepository enderecoRepository;
+
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public Cliente findById(Long id) {
         return clienteRepository.findById(id).orElseThrow(() ->
@@ -66,7 +69,7 @@ public class ClienteService {
 
     public Cliente fromBean(ClienteNewBean bean){
         Cliente cliente = new Cliente(null, bean.getNome(), bean.getEmail(), bean.getCpfOuCnpj(), TipoCliente
-            .toEnum(bean.getTipo()));
+            .toEnum(bean.getTipo()), passwordEncoder.encode(bean.getSenha()));
 
         Endereco end = new Endereco();
         end.setLogradouro(bean.getLogradouro());
