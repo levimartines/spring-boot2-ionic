@@ -1,7 +1,6 @@
 package com.levimartines.cursomc.bean;
 
 import java.io.Serializable;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

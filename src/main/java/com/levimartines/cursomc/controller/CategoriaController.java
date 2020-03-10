@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,7 @@ public class CategoriaController {
         return ResponseEntity.ok(list.stream().map(CategoriaBean::new).collect(Collectors.toList()));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaBean obj, HttpServletRequest request) {
         categoriaService.save(categoriaService.fromBean(obj));
@@ -57,6 +59,7 @@ public class CategoriaController {
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity update(@Valid @RequestBody CategoriaBean obj, @PathVariable Long id) {
         obj.setId(id);
         categoriaService.update(categoriaService.fromBean(obj));
@@ -64,6 +67,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         categoriaService.delete(id);
         return ResponseEntity.noContent().build();

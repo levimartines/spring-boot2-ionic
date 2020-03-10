@@ -1,10 +1,8 @@
 package com.levimartines.cursomc.service;
 
-import com.levimartines.cursomc.enums.Perfil;
 import com.levimartines.cursomc.model.Cliente;
 import com.levimartines.cursomc.repository.ClienteRepository;
 import com.levimartines.cursomc.security.CustomUserDetails;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
