@@ -1,14 +1,17 @@
 package com.levimartines.cursomc.security;
 
+import com.levimartines.cursomc.enums.Perfil;
 import java.util.Collection;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
+
     private Long id;
     private String email;
     private String senha;
@@ -51,5 +54,9 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean hasRole(Perfil perfil) {
+        return authorities.contains(new SimpleGrantedAuthority(perfil.getDescricao()));
     }
 }

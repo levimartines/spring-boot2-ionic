@@ -1,4 +1,4 @@
-package com.levimartines.cursomc.service.exceptions;
+package com.levimartines.cursomc.exceptions;
 
 public class DataIntegrityException extends RuntimeException {
     public DataIntegrityException(String message) {

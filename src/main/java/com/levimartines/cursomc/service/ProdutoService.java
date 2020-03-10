@@ -1,10 +1,10 @@
 package com.levimartines.cursomc.service;
 
+import com.levimartines.cursomc.exceptions.ObjectNotFoundException;
 import com.levimartines.cursomc.model.Categoria;
 import com.levimartines.cursomc.model.Produto;
 import com.levimartines.cursomc.repository.CategoriaRepository;
 import com.levimartines.cursomc.repository.ProdutoRepository;
-import com.levimartines.cursomc.service.exceptions.ObjectNotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

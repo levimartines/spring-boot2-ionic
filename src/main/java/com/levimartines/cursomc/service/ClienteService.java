@@ -2,14 +2,17 @@ package com.levimartines.cursomc.service;
 
 import com.levimartines.cursomc.bean.ClienteBean;
 import com.levimartines.cursomc.bean.ClienteNewBean;
+import com.levimartines.cursomc.enums.Perfil;
 import com.levimartines.cursomc.enums.TipoCliente;
+import com.levimartines.cursomc.exceptions.AuthorizationException;
+import com.levimartines.cursomc.exceptions.DataIntegrityException;
+import com.levimartines.cursomc.exceptions.ObjectNotFoundException;
 import com.levimartines.cursomc.model.Cidade;
 import com.levimartines.cursomc.model.Cliente;
 import com.levimartines.cursomc.model.Endereco;
 import com.levimartines.cursomc.repository.ClienteRepository;
 import com.levimartines.cursomc.repository.EnderecoRepository;
-import com.levimartines.cursomc.service.exceptions.DataIntegrityException;
-import com.levimartines.cursomc.service.exceptions.ObjectNotFoundException;
+import com.levimartines.cursomc.security.CustomUserDetails;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,11 @@ public class ClienteService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public Cliente findById(Long id) {
+        CustomUserDetails userDetails = UserService.authenticated();
+        if (userDetails == null || !userDetails.hasRole(Perfil.ADMIN) && !id
+            .equals(userDetails.getId())) {
+            throw new AuthorizationException("Acesso negado");
+        }
         return clienteRepository.findById(id).orElseThrow(() ->
             new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: "
                 + Cliente.class));
@@ -47,7 +55,7 @@ public class ClienteService {
         enderecoRepository.saveAll(obj.getEnderecos());
         return obj;
     }
-    
+
     public void update(Cliente obj) {
         Cliente newObj = findById(obj.getId());
         updateData(newObj, obj);
@@ -58,18 +66,20 @@ public class ClienteService {
         try {
             findById(id);
             clienteRepository.deleteById(id);
-        } catch (DataIntegrityViolationException e){
-            throw new DataIntegrityException("Não é possível excluir um Cliente que possui Entidades relacionadas");
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException(
+                "Não é possível excluir um Cliente que possui Entidades relacionadas");
         }
     }
 
-    public Cliente fromBean(ClienteBean bean){
-        return new Cliente(bean.getId(),bean.getNome(),bean.getEmail());
+    public Cliente fromBean(ClienteBean bean) {
+        return new Cliente(bean.getId(), bean.getNome(), bean.getEmail());
     }
 
-    public Cliente fromBean(ClienteNewBean bean){
-        Cliente cliente = new Cliente(null, bean.getNome(), bean.getEmail(), bean.getCpfOuCnpj(), TipoCliente
-            .toEnum(bean.getTipo()), passwordEncoder.encode(bean.getSenha()));
+    public Cliente fromBean(ClienteNewBean bean) {
+        Cliente cliente = new Cliente(null, bean.getNome(), bean.getEmail(), bean.getCpfOuCnpj(),
+            TipoCliente
+                .toEnum(bean.getTipo()), passwordEncoder.encode(bean.getSenha()));
 
         Endereco end = new Endereco();
         end.setLogradouro(bean.getLogradouro());
@@ -81,10 +91,10 @@ public class ClienteService {
 
         cliente.getEnderecos().add(end);
         cliente.getTelefones().add(bean.getTelefone1());
-        if(bean.getTelefone2()!=null){
+        if (bean.getTelefone2() != null) {
             cliente.getTelefones().add(bean.getTelefone2());
         }
-        if(bean.getTelefone3()!=null){
+        if (bean.getTelefone3() != null) {
             cliente.getTelefones().add(bean.getTelefone3());
         }
         return cliente;
