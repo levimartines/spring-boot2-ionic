@@ -31,4 +31,4 @@ build/
 .vscode/
 
 ### Spring ###
-./src/main/resources/
+./src/main/resources/*

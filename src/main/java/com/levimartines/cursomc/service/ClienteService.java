@@ -13,14 +13,17 @@ import com.levimartines.cursomc.model.Endereco;
 import com.levimartines.cursomc.repository.ClienteRepository;
 import com.levimartines.cursomc.repository.EnderecoRepository;
 import com.levimartines.cursomc.security.CustomUserDetails;
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -28,6 +31,7 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
     private final EnderecoRepository enderecoRepository;
+    private final S3Service s3Service;
 
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -46,8 +50,11 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Page<Cliente> findPage(Pageable page) {
-        return clienteRepository.findAll(page);
+    public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy,
+        String direction) {
+        PageRequest pageRequest = PageRequest
+            .of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+        return clienteRepository.findAll(pageRequest);
     }
 
     public Cliente save(Cliente obj) {
@@ -70,6 +77,10 @@ public class ClienteService {
             throw new DataIntegrityException(
                 "Não é possível excluir um Cliente que possui Entidades relacionadas");
         }
+    }
+
+    public URI uploadProfilePicture(MultipartFile file) {
+        return s3Service.uploadFile(file);
     }
 
     public Cliente fromBean(ClienteBean bean) {

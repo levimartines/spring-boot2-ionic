@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
@@ -32,24 +34,29 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Object> findById(@PathVariable Long id){
+    public ResponseEntity<Object> findById(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.findById(id));
     }
 
-    @GetMapping(value = "/page")
-    public ResponseEntity<?> findPage(Pageable page){
-        Page<Cliente> list = clienteService.findPage(page);
-        return ResponseEntity.ok(list.map(ClienteBean::new));
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public ResponseEntity<Page<ClienteBean>> findPage(
+        @RequestParam(value = "page", defaultValue = "0") Integer page,
+        @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+        @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+        @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+        Page<Cliente> list = clienteService.findPage(page, linesPerPage, orderBy, direction);
+        Page<ClienteBean> listDto = list.map(ClienteBean::new);
+        return ResponseEntity.ok().body(listDto);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll() {
         List<Cliente> list = clienteService.findAll();
         return ResponseEntity.ok(list.stream().map(ClienteBean::new).collect(Collectors.toList()));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewBean obj, HttpServletRequest request) {
         clienteService.save(clienteService.fromBean(obj));
@@ -67,8 +74,15 @@ public class ClienteController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         clienteService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "/picture")
+    public ResponseEntity<Void> uploadProfilePicture(
+        @RequestParam(name = "file") MultipartFile file) {
+        URI uri = clienteService.uploadProfilePicture(file);
+        return ResponseEntity.created(uri).build();
     }
 }
