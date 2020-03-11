@@ -13,10 +13,12 @@ import com.levimartines.cursomc.model.Endereco;
 import com.levimartines.cursomc.repository.ClienteRepository;
 import com.levimartines.cursomc.repository.EnderecoRepository;
 import com.levimartines.cursomc.security.CustomUserDetails;
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,8 +34,11 @@ public class ClienteService {
     private final ClienteRepository clienteRepository;
     private final EnderecoRepository enderecoRepository;
     private final S3Service s3Service;
-
+    private final ImageService imageService;
     private final BCryptPasswordEncoder passwordEncoder;
+
+    @Value("${img.prefix.client.profile}")
+    private String imagePrefix;
 
     public Cliente findById(Long id) {
         CustomUserDetails userDetails = UserService.authenticated();
@@ -80,7 +85,14 @@ public class ClienteService {
     }
 
     public URI uploadProfilePicture(MultipartFile file) {
-        return s3Service.uploadFile(file);
+        CustomUserDetails userDetails = UserService.authenticated();
+        if (userDetails == null) {
+            throw new AuthorizationException("Acesso negado");
+        }
+        BufferedImage jpgImage = imageService.getJpgFromFile(file);
+        String fileName = imagePrefix + userDetails.getId() + ".jpg";
+        return s3Service
+            .uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
     }
 
     public Cliente fromBean(ClienteBean bean) {

@@ -35,7 +35,7 @@ public class S3Service {
         return uploadFile(is, fileName, contentType);
     }
 
-    private URI uploadFile(InputStream is, String fileName, String contentType) {
+    public URI uploadFile(InputStream is, String fileName, String contentType) {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(contentType);
         log.info("Iniciando upload");
