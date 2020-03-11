@@ -2,6 +2,7 @@ package com.levimartines.cursomc.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.levimartines.cursomc.exceptions.FileException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -27,7 +28,7 @@ public class S3Service {
         try {
             is = file.getInputStream();
         } catch (IOException e) {
-            throw new RuntimeException("Erro de IO: " + e.getMessage());
+            throw new FileException("Erro de IO: " + e.getMessage());
         }
         String fileName = file.getOriginalFilename();
         String contentType = file.getContentType();
@@ -43,7 +44,7 @@ public class S3Service {
         try {
             return s3Client.getUrl(bucketName, fileName).toURI();
         } catch (URISyntaxException e) {
-            throw new RuntimeException("Erro ao converter URL para URI");
+            throw new FileException("Erro ao converter URL para URI");
         }
     }
 
