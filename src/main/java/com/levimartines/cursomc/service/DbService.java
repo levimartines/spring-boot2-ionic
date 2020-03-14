@@ -100,16 +100,20 @@ public class DbService {
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 
         Estado est1 = new Estado(null, "Minas Gerais");
-        Estado est2 = new Estado(null, "São Paulo");
+        Estado est2 = new Estado(null, "Sao Paulo");
+        Estado est3 = new Estado(null, "Parana");
+        Estado est4 = new Estado(null, "Bahia");
+        Estado est5 = new Estado(null, "Sergipe");
+        Estado est6 = new Estado(null, "Acre");
 
-        Cidade c1 = Cidade.builder().nome("Uberlândia").estado(est1).build();
-        Cidade c2 = Cidade.builder().nome("São Paulo").estado(est2).build();
+        Cidade c1 = Cidade.builder().nome("Uberlandia").estado(est1).build();
+        Cidade c2 = Cidade.builder().nome("Sao Paulo").estado(est2).build();
         Cidade c3 = Cidade.builder().nome("Campinas").estado(est2).build();
 
         est1.getCidades().add(c1);
         est2.getCidades().addAll(Arrays.asList(c2, c3));
 
-        estadoRepository.saveAll(Arrays.asList(est1, est2));
+        estadoRepository.saveAll(Arrays.asList(est1, est2, est3, est4, est5, est6));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
         Cliente cli1 = new Cliente(null, "Maria Silva", "ronaldinho@hotmail.com", "19927087039",
