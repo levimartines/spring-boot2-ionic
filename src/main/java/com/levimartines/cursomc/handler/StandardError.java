@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StandardError implements Serializable {
+
+    private Long timestamp;
     private Integer status;
-    private String msg;
-    private Long timeStamp;
+    private String error;
+    private String message;
+    private String path;
 }
