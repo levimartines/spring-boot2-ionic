@@ -48,10 +48,16 @@ public class Produto implements Serializable {
         this.preco = preco;
     }
 
+    public Produto(Long id, String nome, Double preco) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+    }
+
     @JsonIgnore
     public List<Pedido> getPedidos() {
         List<Pedido> list = new ArrayList<>();
-        for(ItemPedido item : itens){
+        for (ItemPedido item : itens) {
             list.add(item.getPedido());
         }
         return list;
