@@ -54,6 +54,15 @@ public class ClienteService {
                 + Cliente.class));
     }
 
+    public Cliente findByEmail(String email) {
+        CustomUserDetails userDetails = UserService.authenticated();
+        if (userDetails == null || !userDetails.hasRole(Perfil.ADMIN) && !email
+            .equals(userDetails.getUsername())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+        return clienteRepository.findByEmail(email);
+    }
+
     public List<Cliente> findAll() {
         return clienteRepository.findAll();
     }

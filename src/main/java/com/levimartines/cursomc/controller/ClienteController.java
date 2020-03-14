@@ -38,6 +38,11 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.findById(id));
     }
 
+    @GetMapping(value = "/email")
+    public ResponseEntity<Object> findById(@RequestParam(value = "email") String email) {
+        return ResponseEntity.ok(clienteService.findByEmail(email));
+    }
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public ResponseEntity<Page<ClienteBean>> findPage(
@@ -58,7 +63,8 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewBean obj, HttpServletRequest request) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewBean obj,
+        HttpServletRequest request) {
         clienteService.save(clienteService.fromBean(obj));
         URI uri = ServletUriComponentsBuilder.fromRequest(request)
             .path("/{id}").buildAndExpand(obj.getId()).toUri();

@@ -26,6 +26,7 @@ public class AuthController {
     private ResponseEntity<?> refreshToken(HttpServletResponse res) {
         res.addHeader("Authorization",
             jwtUtil.generateToken(UserService.authenticated().getUsername()));
+        res.addHeader("access-control-expose-headers", "Authorization");
         return ResponseEntity.noContent().build();
     }
 
