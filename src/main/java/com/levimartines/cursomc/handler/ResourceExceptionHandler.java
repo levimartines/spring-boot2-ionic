@@ -45,7 +45,7 @@ public class ResourceExceptionHandler {
         for (FieldError fieldErr : e.getBindingResult().getFieldErrors()) {
             err.addError(fieldErr.getField(), fieldErr.getDefaultMessage());
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
     }
 
     @ExceptionHandler(AuthorizationException.class)

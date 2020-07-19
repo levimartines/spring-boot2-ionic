@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: test
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+default:
+  sender:
+  recipient:
+
+jwt:
+  secret: SequenciaDeCaracteresParaAssinarToken
+  expiration: 86400000
+
+aws:
+  access_key_id:
+  secret_access_key:
+s3:
+  bucket: curso-spring-ionic
+  region: sa-east-1
+
+img:
+  prefix:
+    client:
+      profile: cp
+  profile:
+    size: 200
