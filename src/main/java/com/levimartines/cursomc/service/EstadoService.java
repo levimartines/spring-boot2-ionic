@@ -1,5 +1,6 @@
 package com.levimartines.cursomc.service;
 
+import com.levimartines.cursomc.bean.CidadeBean;
 import com.levimartines.cursomc.exceptions.ObjectNotFoundException;
 import com.levimartines.cursomc.model.Estado;
 import com.levimartines.cursomc.repository.EstadoRepository;
@@ -25,7 +26,7 @@ public class EstadoService {
         return repository.findAll(Sort.by("nome"));
     }
 
-    public List<String> findAllCidades(Long estadoCod) {
+    public List<CidadeBean> findAllCidades(Long estadoCod) {
         return cidadeService.findAllByEstado(findById(estadoCod));
     }
 }

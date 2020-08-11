@@ -189,10 +189,6 @@ public class DbService {
 
         Estado est1 = new Estado(null, "Minas Gerais");
         Estado est2 = new Estado(null, "Sao Paulo");
-        Estado est3 = new Estado(null, "Parana");
-        Estado est4 = new Estado(null, "Bahia");
-        Estado est5 = new Estado(null, "Sergipe");
-        Estado est6 = new Estado(null, "Acre");
 
         Cidade c1 = Cidade.builder().nome("Uberlandia").estado(est1).build();
         Cidade c2 = Cidade.builder().nome("Sao Paulo").estado(est2).build();
@@ -201,10 +197,10 @@ public class DbService {
         est1.getCidades().add(c1);
         est2.getCidades().addAll(Arrays.asList(c2, c3));
 
-        estadoRepository.saveAll(Arrays.asList(est1, est2, est3, est4, est5, est6));
+        estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "ronaldinho@hotmail.com", "19927087039",
+        Cliente cli1 = new Cliente(null, "Levi Martines", "levi@levi.com", "42221689801",
             TipoCliente.PESSOAFISICA, passwordEncoder.encode("123"));
         cli1.getTelefones().addAll(Arrays.asList("3331125", "5555555"));
 

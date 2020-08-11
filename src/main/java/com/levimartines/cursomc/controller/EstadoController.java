@@ -1,6 +1,9 @@
 package com.levimartines.cursomc.controller;
 
+import com.levimartines.cursomc.bean.CidadeBean;
+import com.levimartines.cursomc.model.Estado;
 import com.levimartines.cursomc.service.EstadoService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +19,12 @@ public class EstadoController {
     private EstadoService service;
 
     @GetMapping
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<Estado>> findAll() {
         return ResponseEntity.ok(service.findAllEstados());
     }
 
     @GetMapping(value = "/{id}/cidades")
-    public ResponseEntity findAllCidadesByEstadoCod(@PathVariable Long id) {
+    public ResponseEntity<List<CidadeBean>> findAllCidadesByEstadoCod(@PathVariable Long id) {
         return ResponseEntity.ok(service.findAllCidades(id));
     }
 
