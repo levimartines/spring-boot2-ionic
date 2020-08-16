@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: mysql://be23841dda85d7:8eeebebf@us-cdbr-iron-east-02.cleardb.net/heroku_ffca6f733c9afb4?reconnect=true
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  mail:
+    host: smtp.gmail.com
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+          starttls:
+            enable: true
+          ssl:
+            enable: true
