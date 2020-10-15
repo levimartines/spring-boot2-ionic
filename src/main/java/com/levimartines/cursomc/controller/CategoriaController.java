@@ -3,6 +3,9 @@ package com.levimartines.cursomc.controller;
 import com.levimartines.cursomc.bean.CategoriaBean;
 import com.levimartines.cursomc.model.Categoria;
 import com.levimartines.cursomc.service.CategoriaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -28,22 +31,49 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/categorias")
+@Api(tags = "CategoriaController - Endpoints relacionados a Categorias", produces = "application/json")
 public class CategoriaController {
 
-    private CategoriaService categoriaService;
+    private final CategoriaService categoriaService;
 
     public CategoriaController(CategoriaService categoriaService) {
         this.categoriaService = categoriaService;
     }
 
     @GetMapping(value = "/{id}")
-    @ApiOperation(value = "Busca por id")
+    @ApiOperation(
+        value = "Busca de Categoria por id",
+        notes = "Retorna a categoria específica",
+        produces = "application/json",
+        httpMethod = "GET",
+        response = Categoria.class
+    )
     public ResponseEntity<Categoria> findById(@PathVariable Long id) {
         return ResponseEntity.ok(categoriaService.findById(id));
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    @ApiOperation(value = "Retorna todas categorias com paginação")
+    @ApiOperation(
+        value = "Retorna todas categorias com paginação",
+        notes = "Retorna uma página de categorias",
+        produces = "application/json",
+        httpMethod = "GET",
+        response = Page.class
+    )
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+            value = "Número da página que você deseja buscar (0..N)", example = "0", defaultValue = "0"),
+        @ApiImplicitParam(name = "linesPerPage", dataType = "integer", paramType = "query",
+            value = "Quantidade máxima de resultados que será retornada.", example = "12", defaultValue = "24"),
+        @ApiImplicitParam(name = "direction", dataType = "string", paramType = "query",
+            value = "Critério de ordenação", example = "DESC", defaultValue = "ASC", allowableValues = ",ASC, DESC"),
+        @ApiImplicitParam(name = "orderBy", dataType = "string", paramType = "query",
+            value = "Critério de ordenação", example = "id", defaultValue = "nome", allowableValues = ",id, nome"),
+    })
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Requisição concluída com sucesso", responseContainer = "content", response = CategoriaBean.class),
+        @ApiResponse(code = 500, message = "Erro interno do servidor")
+    })
     public ResponseEntity<Page<CategoriaBean>> findPage(
         @RequestParam(value = "page", defaultValue = "0") Integer page,
         @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
@@ -55,7 +85,16 @@ public class CategoriaController {
     }
 
     @GetMapping
-    @ApiOperation(value = "Retorna todas categorias")
+    @ApiOperation(
+        value = "Retorna todas categorias",
+        produces = "application/json",
+        httpMethod = "GET",
+        response = Page[].class
+    )
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Requisição concluída com sucesso", response = CategoriaBean[].class),
+        @ApiResponse(code = 500, message = "Erro interno do servidor")
+    })
     public ResponseEntity<?> findAll() {
         List<Categoria> list = categoriaService.findAll();
         return ResponseEntity

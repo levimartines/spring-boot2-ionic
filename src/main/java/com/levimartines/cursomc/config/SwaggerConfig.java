@@ -35,7 +35,6 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
             .useDefaultResponseMessages(false)
-            .globalResponseMessage(RequestMethod.GET, Arrays.asList(m403, m404, m500))
             .globalResponseMessage(RequestMethod.POST, Arrays.asList(m201, m403, m422, m500))
             .globalResponseMessage(RequestMethod.PUT,
                 Arrays.asList(m204put, m403, m404, m422, m500))
