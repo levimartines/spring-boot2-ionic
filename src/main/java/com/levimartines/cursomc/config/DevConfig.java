@@ -1,8 +1,8 @@
 package com.levimartines.cursomc.config;
 
 import com.levimartines.cursomc.service.DbService;
-import com.levimartines.cursomc.service.EmailService;
-import com.levimartines.cursomc.service.MockEmailService;
+import com.levimartines.cursomc.service.email.EmailService;
+import com.levimartines.cursomc.service.email.MockEmailService;
 import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

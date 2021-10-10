@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ import org.hibernate.annotations.CascadeType;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -75,7 +77,7 @@ public class Cliente implements Serializable {
         addPerfil(Perfil.CLIENTE);
     }
 
-    public Set<Perfil> getPerfis() {
+    public Set<Perfil> getPerfisId() {
         return perfis.stream().map(Perfil::toEnum).collect(Collectors.toSet());
     }
 

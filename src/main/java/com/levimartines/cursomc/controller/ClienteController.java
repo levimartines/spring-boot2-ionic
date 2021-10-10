@@ -34,12 +34,12 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Object> findById(@PathVariable Long id) {
+    public ResponseEntity<Cliente> findById(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.findById(id));
     }
 
     @GetMapping(value = "/email")
-    public ResponseEntity<Object> findById(@RequestParam(value = "email") String email) {
+    public ResponseEntity<Object> findByEmail(@RequestParam(value = "email") String email) {
         return ResponseEntity.ok(clienteService.findByEmail(email));
     }
 

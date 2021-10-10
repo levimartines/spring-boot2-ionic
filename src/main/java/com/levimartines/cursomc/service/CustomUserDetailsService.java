@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (cliente == null) {
             throw new UsernameNotFoundException(email);
         }
-        var authorities = cliente.getPerfis().stream()
+        var authorities = cliente.getPerfisId().stream()
             .map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
         return new CustomUserDetails(cliente.getId(), cliente.getEmail(), cliente.getSenha(),
             authorities);

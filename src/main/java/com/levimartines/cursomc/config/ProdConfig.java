@@ -1,7 +1,7 @@
 package com.levimartines.cursomc.config;
 
-import com.levimartines.cursomc.service.EmailService;
-import com.levimartines.cursomc.service.MockEmailService;
+import com.levimartines.cursomc.service.email.EmailService;
+import com.levimartines.cursomc.service.email.MockEmailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;

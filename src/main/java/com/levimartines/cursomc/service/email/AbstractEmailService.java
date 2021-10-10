@@ -1,4 +1,4 @@
-package com.levimartines.cursomc.service;
+package com.levimartines.cursomc.service.email;
 
 import com.levimartines.cursomc.model.Cliente;
 import com.levimartines.cursomc.model.Pedido;

@@ -2,6 +2,9 @@ package com.levimartines.cursomc.repository;
 
 import com.levimartines.cursomc.model.Categoria;
 import com.levimartines.cursomc.model.Produto;
+
+
+import java.util.Collection;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,5 +16,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     @Transactional(readOnly=true)
-    Page<Produto> findDistinctByNomeContainingAndCategoriasIn(@Param("nome") String nome, @Param("categorias") List<Categoria> categorias, Pageable pageRequest);
+    Page<Produto> findDistinctByNomeIgnoreCaseContainingAndCategoriasIn(@Param("nome") String nome, @Param("categorias") Collection<Categoria> categorias, Pageable pageRequest);
 }

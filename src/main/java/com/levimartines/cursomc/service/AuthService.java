@@ -3,6 +3,8 @@ package com.levimartines.cursomc.service;
 import com.levimartines.cursomc.exceptions.ObjectNotFoundException;
 import com.levimartines.cursomc.model.Cliente;
 import com.levimartines.cursomc.repository.ClienteRepository;
+import com.levimartines.cursomc.service.email.EmailService;
+
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -12,6 +12,8 @@ import com.levimartines.cursomc.repository.ItemPedidoRepository;
 import com.levimartines.cursomc.repository.PagamentoRepository;
 import com.levimartines.cursomc.repository.PedidoRepository;
 import com.levimartines.cursomc.security.CustomUserDetails;
+import com.levimartines.cursomc.service.email.EmailService;
+
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +65,7 @@ public class PedidoService {
 
         if (obj.getPagamento() instanceof PagamentoComBoleto) {
             PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
-            boletoService.preencherPagamento(obj, obj.getInstante());
+            boletoService.preencherPagamento(pagto, obj.getInstante());
         }
 
         obj = pedidoRepository.save(obj);
