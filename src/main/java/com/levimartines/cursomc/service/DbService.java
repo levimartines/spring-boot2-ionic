@@ -251,4 +251,16 @@ public class DbService {
         itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
     }
 
+    public void cleanTestDatabase() {
+        itemPedidoRepository.deleteAll();
+        pagamentoRepository.deleteAll();
+        pedidoRepository.deleteAll();
+        enderecoRepository.deleteAll();
+        cidadeRepository.deleteAll();
+        clienteRepository.deleteAll();
+        estadoRepository.deleteAll();
+        produtoRepository.deleteAll();
+        categoriaRepository.deleteAll();
+    }
+
 }

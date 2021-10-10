@@ -63,7 +63,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         @Override
         public void onAuthenticationFailure(HttpServletRequest request,
             HttpServletResponse response, AuthenticationException exception)
-            throws IOException, ServletException {
+            throws IOException {
             response.setStatus(401);
             response.setContentType("application/json");
             response.getWriter().append(json());

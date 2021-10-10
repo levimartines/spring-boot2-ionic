@@ -15,5 +15,7 @@ class DbServiceTest {
 	@Test
 	void testInstantiateTestDb() throws ParseException {
 		dbService.instantiateTestDatabase();
+
+		dbService.cleanTestDatabase();
 	}
 }
