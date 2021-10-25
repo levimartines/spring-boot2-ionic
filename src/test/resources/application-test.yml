@@ -8,6 +8,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
 logging:
   level:
     root: info
