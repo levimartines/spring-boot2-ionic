@@ -1,5 +1,6 @@
 package com.levimartines.cursomc.controller;
 
+import com.levimartines.cursomc.annotation.Auditable;
 import com.levimartines.cursomc.bean.CategoriaBean;
 import com.levimartines.cursomc.model.Categoria;
 import com.levimartines.cursomc.service.CategoriaService;
@@ -48,6 +49,7 @@ public class CategoriaController {
         httpMethod = "GET",
         response = Categoria.class
     )
+    @Auditable
     public ResponseEntity<Categoria> findById(@PathVariable Long id) {
         return ResponseEntity.ok(categoriaService.findById(id));
     }

@@ -9,6 +9,8 @@ import com.levimartines.cursomc.repository.ProdutoRepository;
 import java.util.List;
 
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -26,6 +29,7 @@ public class ProdutoService {
 
     @Cacheable(cacheNames = "productsCache", key = "#id")
     public Produto findById(Long id) {
+        log.info("Loading product with id {}", id);
         return produtoRepository.findById(id).orElseThrow(() ->
             new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: "
                 + Produto.class));

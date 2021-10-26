@@ -3,12 +3,20 @@ package com.levimartines.cursomc.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.levimartines.cursomc.enums.Perfil;
 import com.levimartines.cursomc.enums.TipoCliente;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -18,11 +26,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -38,7 +42,7 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    @Column(unique=true)
+    @Column(unique = true)
     private String email;
     private String cpfOuCnpj;
     private Long tipo;
@@ -58,6 +62,10 @@ public class Cliente implements Serializable {
     @CollectionTable(name = "perfis")
     private final Set<Long> perfis = new HashSet<>();
 
+    public Cliente(Long id) {
+        this.id = id;
+    }
+
     public Cliente(Long id, String nome, String email) {
         this.id = id;
         this.nome = nome;
@@ -66,7 +74,7 @@ public class Cliente implements Serializable {
     }
 
     public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo,
-        String senha) {
+                   String senha) {
         super();
         this.id = id;
         this.nome = nome;
@@ -81,7 +89,7 @@ public class Cliente implements Serializable {
         return perfis.stream().map(Perfil::toEnum).collect(Collectors.toSet());
     }
 
-    public void addPerfil (Perfil perfil){
+    public void addPerfil(Perfil perfil) {
         perfis.add(perfil.getCod());
     }
 
