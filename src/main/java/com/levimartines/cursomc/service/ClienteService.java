@@ -14,6 +14,7 @@ import com.levimartines.cursomc.repository.ClienteRepository;
 import com.levimartines.cursomc.repository.EnderecoRepository;
 import com.levimartines.cursomc.security.CustomUserDetails;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -96,7 +97,7 @@ public class ClienteService {
         }
     }
 
-    public URI uploadProfilePicture(MultipartFile file) {
+    public URI uploadProfilePicture(MultipartFile file) throws IOException {
         CustomUserDetails userDetails = UserService.authenticated();
         if (userDetails == null) {
             throw new AuthorizationException("Acesso negado");

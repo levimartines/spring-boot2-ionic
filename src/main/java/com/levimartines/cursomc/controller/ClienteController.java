@@ -4,6 +4,8 @@ import com.levimartines.cursomc.bean.ClienteBean;
 import com.levimartines.cursomc.bean.ClienteNewBean;
 import com.levimartines.cursomc.model.Cliente;
 import com.levimartines.cursomc.service.ClienteService;
+
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,7 +74,7 @@ public class ClienteController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity update(@Valid @RequestBody ClienteBean obj, @PathVariable Long id) {
+    public ResponseEntity<Void> update(@Valid @RequestBody ClienteBean obj, @PathVariable Long id) {
         obj.setId(id);
         clienteService.update(clienteService.fromBean(obj));
         return ResponseEntity.noContent().build();
@@ -87,7 +89,7 @@ public class ClienteController {
 
     @PostMapping(value = "/picture")
     public ResponseEntity<Void> uploadProfilePicture(
-        @RequestParam(name = "file") MultipartFile file) {
+        @RequestParam(name = "file") MultipartFile file) throws IOException {
         URI uri = clienteService.uploadProfilePicture(file);
         return ResponseEntity.created(uri).build();
     }

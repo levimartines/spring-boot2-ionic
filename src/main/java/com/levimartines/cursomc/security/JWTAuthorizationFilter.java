@@ -14,8 +14,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private JWTUtil jwtUtil;
-    private UserDetailsService userDetailsService;
+    private final JWTUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
 
     public JWTAuthorizationFilter(
         AuthenticationManager authenticationManager, JWTUtil jwtUtil,

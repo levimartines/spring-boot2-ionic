@@ -10,15 +10,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("test")
-public class TestConfig {
+@Profile("local")
+public class LocalConfig {
 
     @Autowired
     private DbService dbService;
 
     @Bean
     public boolean instantiateDatabase() throws ParseException {
-        // dbService.instantiateTestDatabase();
+        dbService.instantiateTestDatabase();
         return true;
     }
 

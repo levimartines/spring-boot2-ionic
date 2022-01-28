@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        if (Arrays.asList(environment.getActiveProfiles()).contains("test")) {
+        if (Arrays.asList(environment.getActiveProfiles()).contains("local")) {
             httpSecurity.headers().frameOptions().disable();
         }
 
@@ -90,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
             "/configuration/**",
             "/swagger-ui.html", "/webjars/**");

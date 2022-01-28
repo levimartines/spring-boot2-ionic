@@ -4,7 +4,16 @@ spring:
     username: sa
     password:
   jpa:
+    hibernate:
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+aws:
+  access_key_id: 12345678
+  secret_access_key: 12345678
+s3:
+  bucket: minio-bucket
+  region: us-east-1
+

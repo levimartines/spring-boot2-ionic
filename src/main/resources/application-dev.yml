@@ -26,3 +26,6 @@ spring:
             enable: true
           ssl:
             enable: true
+s3:
+  bucket: myawsbucket-levimartines
+  region: sa-east-1
